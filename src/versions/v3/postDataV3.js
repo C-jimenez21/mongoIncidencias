@@ -1,10 +1,13 @@
 import { genCollection, getNewId, searchCallback } from "../../helpers/db.js";
 
+/**
+ * 
+ * @param postNewIncidenciaV3 -> permite crear un nuevo trainer pero sin usar los mismos datos del backend y sin especificar el id
+ */
+
 
 const postNewIncidenciaV3 = async(req, res) => {
     const { NIVEL_INICIDENCIA: inciLevel, CATEGORIA_INICIDENCIA: inciCat, FECHA_INCIDENCIA: inciDat, LUGAR_INCIDENCIA: inciPlace, DESCRIPCION: inciDes } = req.body;
-    let validacion = await searchCallback("reporte", "_id", 1);
-    if (validacion) {
         let schema = {
             "_id": await getNewId("reporte"),
             "usu_incidencia":{
@@ -17,28 +20,30 @@ const postNewIncidenciaV3 = async(req, res) => {
         }
         let col = await genCollection("reporte");
         let result = await col.insertOne(schema);
-        res.send(result);    
-    }else{
-        res.status(400).send("Este id no se encuentra registrado en la base de datos");
-    }
-    
+        res.send(result);   
 }
 
 
+const postNewTrainerV3 = async(req, res) => {
+    const { TRAINER_NAME: name, PERSONAL_EMAIL: email, CORPORATIVO_EMAIL: eCorp, MOVIL_PHONE: tMovil, RESIDENCIA_PHONE: tRes, EMPRESA_PHONE: tEmp, MOVIL_EMPRESA_PHONE: tEmpMov } = req.body;
+        let schema = {
+            "_id": await getNewId("trainer"),
+            "nombre_completo": name,
+            "email_personal": email,
+            "email_corporativo": eCorp,
+            "telefono_movil": tMovil,
+            "telefono_residencia": tRes,
+            "telefono_empresa": tEmp,
+            "telefono_movil_empresarial": tEmpMov
+        }
+        let col = await genCollection("trainer");
+        let result = await col.insertOne(schema);
+        res.send(result);    
+  
+    }
 
 export {
-    postNewIncidenciaV3
+    postNewIncidenciaV3,
+    postNewTrainerV3
+    
 }
-
-/*
- {
-        _id: Number(siguienteId("reporte")),
-        usu_incidencia: {
-            nivel: 2,
-            categoria: "leve"
-        },
-        fecha: ISODate("2023-08-20"),
-        lugar_incidencia: "Oficina A",
-        descripcion: "Reporte de incidente menor en la oficina."
-    }
-*/

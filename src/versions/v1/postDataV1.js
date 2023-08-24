@@ -1,6 +1,12 @@
 import { genCollection, searchCallback} from "../../helpers/db.js";
 
 
+/**
+ * 
+ * ? postea un nueva incidencia pero se debe agregar el id y se manejan mismo formateo de valores del backend en el bod
+ */
+
+
 const postNewIncidencia = async(req, res) => {
     const {id, categoria, nivel, fecha, lugar_incidencia, descripcion} = req.body
     let validacion = await searchCallback("reporte", "_id", id);
@@ -29,15 +35,3 @@ export {
     postNewIncidencia
 }
 
-/*
- {
-        _id: Number(siguienteId("reporte")),
-        usu_incidencia: {
-            nivel: 2,
-            categoria: "leve"
-        },
-        fecha: ISODate("2023-08-20"),
-        lugar_incidencia: "Oficina A",
-        descripcion: "Reporte de incidente menor en la oficina."
-    }
-*/

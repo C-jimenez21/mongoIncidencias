@@ -2,6 +2,11 @@ import { genCollection, getNewId } from '../../helpers/db.js'
 
 
 
+/**
+ * 
+ * @param getAllIncidenciasV3 -> En lista todas las incidencias por nivel de criticidad 
+ */
+
 const getAllIncidenciasV3 = async(req,res) =>{
     try {
         console.log("entre v3");
@@ -12,6 +17,11 @@ const getAllIncidenciasV3 = async(req,res) =>{
     console.log(error);
    }
 }
+
+/**
+ * 
+ * @param getIncidenciasByDate -> En lista todas las incidencias por fecha especifica 
+ */
 
 const getIncidenciasByDate = async(req,res) =>{
     try {
@@ -28,9 +38,43 @@ const getIncidenciasByDate = async(req,res) =>{
 
 
 
+/**
+ * 
+ * @param getAllTrainersV3 -> En lista todas los trainer por orden de alfabetico y formatea la salida de datos 
+ */
+
+const getAllTrainersV3 = async(req,res) =>{
+    try {
+    console.log("entre v3");
+    let col = await genCollection("trainer");
+    let result = await col.aggregate([
+        {
+            $sort: {
+                nombre_completo: 1
+            }
+        },
+        {
+            $project: {
+                IDENTIDICACION: "$_id",
+                NOMBRE_TRAINER: "$nombre_completo",
+                EMAIL_TRAINER:{PERSONAL:"$email_personal", CORPORATIVO:"$email_corporativo"},
+                TELEFONO_TRAINER: { MOVIL: "$telefono_movil", RESIDENCIA:"$telefono_residencia", EMPRESA: "$telefono_empresa", MOVIL_EMPRESA:"$telefono_movil_empresarial"}
+            }
+        }
+    ]).toArray();
+    (result.length === 0) ? res.status(404).send("No existen trainers hasta el momento"):res.status(200).send(result)
+   } catch (error) {
+    console.log(error);
+   }
+}
+
+
+
+
 
 
 export {
     getAllIncidenciasV3,
-    getIncidenciasByDate
+    getIncidenciasByDate,
+    getAllTrainersV3
 }

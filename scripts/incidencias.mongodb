@@ -215,3 +215,20 @@ db.salon.aggregate([
         }
     }
 ])
+
+use("db_campus_incidencias")
+db.trainer.aggregate([
+    {
+        $sort: {
+            nombre_completo: 1
+        }
+    },
+    {
+        $project: {
+            IDENTIDICACION: "$_id",
+            NOMBRE_TRAINER: "$nombre_completo",
+            EMAIL_TRAINER:{PERSONAL:"$email_personal", CORPORATIVO:"$email_corporativo"},
+            TELEFONO_TRAINER: { MOVIL: "$telefono_movil", RESIDENCIA:"$telefono_residencia", EMPRESA: "$telefono_empresa", MOVIL_EMPRESA:"$telefono_movil_empresarial"}
+        }
+    }
+])
