@@ -25,7 +25,7 @@ db.roles.insertMany([
         email_registro: "admin@example.com",
         password_registro: "admin23",
         rol_name: "Administrador",
-        rol_access: ["salon", "usuario_reporte", "trainer"]
+        rol_access: ["salon", "reporte", "trainer"]
     }
 ]);
 /**
@@ -143,12 +143,12 @@ db.trainer.insertMany([
     }
 ]);
 /**
- * ! usuario_reporte
+ * ! reporte
  */
 use("db_campus_incidencias");
-db.usuario_reporte.insertMany([
+db.reporte.insertMany([
     {
-        _id: Number(siguienteId("usuario_reporte")),
+        _id: Number(siguienteId("reporte")),
         usu_incidencia: {
             nivel: 2,
             categoria: "leve"
@@ -158,7 +158,7 @@ db.usuario_reporte.insertMany([
         descripcion: "Reporte de incidente menor en la oficina."
     },
     {
-        _id: Number(siguienteId("usuario_reporte")),
+        _id: Number(siguienteId("reporte")),
         usu_incidencia: {
             nivel: 5,
             categoria: "moderada"
@@ -168,7 +168,7 @@ db.usuario_reporte.insertMany([
         descripcion: "Reporte de problema con el equipo de red."
     },
     {
-        _id: Number(siguienteId("usuario_reporte")),
+        _id: Number(siguienteId("reporte")),
         usu_incidencia: {
             nivel: 2,
             categoria: "leve"
@@ -178,7 +178,7 @@ db.usuario_reporte.insertMany([
         descripcion: "Reporte de problema con la impresora."
     },
     {
-        _id: Number(siguienteId("usuario_reporte")),
+        _id: Number(siguienteId("reporte")),
         usu_incidencia: {
             nivel: 9,
             categoria: "critica"
@@ -188,7 +188,7 @@ db.usuario_reporte.insertMany([
         descripcion: "Reporte de fallo del servidor principal."
     },
     {
-        _id: Number(siguienteId("usuario_reporte")),
+        _id: Number(siguienteId("reporte")),
         usu_incidencia: {
             nivel: 6,
             categoria: "moderada"
@@ -198,3 +198,20 @@ db.usuario_reporte.insertMany([
         descripcion: "Reporte de lentitud en las computadoras."
     }
 ]);
+
+
+use("db_campus_incidencias")
+db.reporte.findOne({ "_id": 2 })
+db.reporte.find().sort({"usu_incidencia.nivel": -1})
+
+
+//Consultas salon
+use("db_campus_incidencias")
+db.salon.find().sort({"salon_area" : 1})
+db.salon.aggregate([
+    {
+        $match: {
+          "salon_area": {$eq: "review1"}
+        }
+    }
+])

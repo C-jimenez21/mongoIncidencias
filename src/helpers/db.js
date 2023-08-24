@@ -1,4 +1,4 @@
-import  {con}  from '../DB/connection.js';
+import  {con}  from '../config/atlas.js';
 
 const genCollection = async (coleccion) => {
     try {

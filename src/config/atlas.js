@@ -7,6 +7,7 @@ console.log(process.env.ATLAS_USER);
 export async function con(){
     try {
         const URI = `mongodb+srv://${process.env.ATLAS_USER}:${process.env.ATLAS_PASSWORD}@cluster0.b0o2rzg.mongodb.net/${process.env.ATLAS_DB}`;
+        console.log(URI);
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true
