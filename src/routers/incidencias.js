@@ -1,5 +1,6 @@
 import { getAllIncidencias, getIncidenciasById }   from '../versions/v1/getDataV1.js'
-import { getAllIncidenciasV2 } from '../versions/v2/getDataV2.js'
+import { postNewIncidencia } from '../versions/v1/postDataV1.js';
+//import { getAllIncidenciasV2 } from '../versions/v2/getDataV2.js'
 import { getAllIncidenciasV3, getIncidenciasByDate } from '../versions/v3/getDataV3.js'
 
 //import {limitUsuario} from '../config/limit.js'
@@ -38,6 +39,14 @@ appIncidencias.get('/:id', version({
      "^1.1.1": getIncidenciasById,
      "3.5.0": getIncidenciasByDate
  }));
+
+/**
+ * @VERSION 1.1.1 -> Lista todas las incidencias por id
+ * @VERSION 3.5.0-> Lista todas las incidencias por fecha
+ */
+appIncidencias.post('/', version({
+    "^1.1.1": postNewIncidencia
+}));
 
 
 export {
