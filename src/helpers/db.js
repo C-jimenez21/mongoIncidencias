@@ -27,9 +27,25 @@ const genCollection = async (coleccion) => {
         }
     }
 
+async function searchCallback(colleccion, item, contenido){
+    try {
+        
+        let newCollection = await genCollection(colleccion);
+        let result = await newCollection.findOne({ [item] : contenido});
+        return result
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
     export {
         genCollection,
         getNewId,
+        searchCallback
     }
     
     

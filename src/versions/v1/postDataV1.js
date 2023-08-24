@@ -1,21 +1,26 @@
-import { genCollection, getNewId } from "../../helpers/db.js";
+import { genCollection, searchCallback} from "../../helpers/db.js";
 
 
 const postNewIncidencia = async(req, res) => {
-    const { NIVEL_INICIDENCIA: inciLevel, CATEGORIA_INICIDENCIA: inciCat, FECHA_INCIDENCIA: inciDat, LUGAR_INCIDENCIA: inciPlace, DESCRIPCION: inciDes } = req.body
+    const {id, categoria, nivel, fecha, lugar_incidencia, descripcion} = req.body
+    let validacion = await searchCallback("reporte", "_id", id);
+    if (!validacion) {
     let schema = {
-        "_id": await getNewId("reporte"),
+        "_id": Number(id),
         "usu_incidencia":{
-            "nivel": inciLevel,
-            "categoria": inciCat,
+            "nivel": nivel,
+            "categoria": categoria,
         },
-        "fecha": new Date(inciDat),
-        "lugar_incidencia": inciPlace,
-        "descripcion": inciDes
+        "fecha": new Date(fecha),
+        "lugar_incidencia": lugar_incidencia,
+        "descripcion": descripcion
     }
     let col = await genCollection("reporte");
     let result = await col.insertOne(schema);
     res.send(result);
+}else{
+    res.status(400).send("Este id ya se encuentra registrado en la base de datos");
+}
 }
 
 

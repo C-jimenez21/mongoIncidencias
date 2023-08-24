@@ -9,7 +9,7 @@ const appExpress = express();
 
 appExpress.use(express.json());
 
-appExpress.use('/prueba', appIncidencias);
+appExpress.use('/prueba', appI ncidencias);
 
 // escuchar servidor
 appExpress.listen(servidor.port, () => {

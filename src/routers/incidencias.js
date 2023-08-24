@@ -1,7 +1,8 @@
 import { getAllIncidencias, getIncidenciasById }   from '../versions/v1/getDataV1.js'
-import { postNewIncidencia } from '../versions/v1/postDataV1.js';
+import { postNewIncidencia } from '../versions/v1/postDataV1.js'
 //import { getAllIncidenciasV2 } from '../versions/v2/getDataV2.js'
 import { getAllIncidenciasV3, getIncidenciasByDate } from '../versions/v3/getDataV3.js'
+import {  postNewIncidenciaV3 } from '../versions/v3/postDataV3.js';
 
 //import {limitUsuario} from '../config/limit.js'
 //import passportHelper from '../config/passportHelpert.js'
@@ -41,11 +42,12 @@ appIncidencias.get('/:id', version({
  }));
 
 /**
- * @VERSION 1.1.1 -> Lista todas las incidencias por id
- * @VERSION 3.5.0-> Lista todas las incidencias por fecha
+ * @VERSION 1.1.1 -> Inserta una inidencia pero se tiene que especificar el id que tendra y ademas se maneja la estructura de nombres que se usa en el backend
+ * @VERSION 3.5.0-> Inserta una inidencia, pero el id se agregara automaticamente ademas la estructura de datos de envio es diferente a la del backend dotando esta version de mayor seguridad
  */
 appIncidencias.post('/', version({
-    "^1.1.1": postNewIncidencia
+    "^1.1.1": postNewIncidencia, 
+    "3.5.0": postNewIncidenciaV3
 }));
 
 
