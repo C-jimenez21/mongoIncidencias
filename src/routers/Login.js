@@ -9,10 +9,10 @@ import {  postNewComputerV3 } from '../versions/v3/postDataV3.js';
 import Router from 'express';
 import routesVersioning  from 'express-routes-versioning';
 
-const appSalon = Router();
+const appLogin = Router();
 const version = routesVersioning();
 //Headers 'Authorization: Bearer ....'
-//appSalon.use(limitUsuario(), passportHelper.authenticate('bearer', { session: false }));
+//appLogin.use(limitUsuario(), passportHelper.authenticate('bearer', { session: false }));
 //Headers 'Accept-Version: 1.0.0' 
 
 /**
@@ -20,27 +20,20 @@ const version = routesVersioning();
  * @VERSION 3.5.0-> Lista todas los trainers registrados pero fomateando su salida con valores diferentes a los del backend
  */
 
-appSalon.get('/',  version({
+appLogin.get('/',  version({
     "^1.0.0": getAllRooms,
     "3.5.0": getAllTrainersV3
 }));
 
-/**
- * @VERSION 1.1.1 -> Lista todas las salones por id
- */
-
-appSalon.get('/:id', version({
-     "^1.1.1": getRoomsById,
- }));
 
 /**
  * @VERSION 3.5.0-> Inserta un nuevo PC en un salon ya existente
  */
-appSalon.post('/', version({ 
+appLogin.post('/', version({ 
     "3.5.0": postNewComputerV3
 }));
 
 
 export {
-    appSalon
+    appLogin
 };
