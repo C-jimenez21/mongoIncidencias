@@ -40,9 +40,18 @@ db.createCollection("roles", {
                     bsonType: 'string',
                     description : "El NOMBRE_ROL es un parametro obligatorio y debe ser un string"
                 },
-                rol_access:{  
-                    bsonType: 'array',
-                    description : "El ACCESO_ROLES es un parametro obligatorio y debe ser un ARRAY"
+                rol_access:{ 
+                    bsonType: 'object',
+                    description: "Ingrese los permisos",
+                    properties: {
+                        "/endpoint": {
+                            bsonType: "array",
+                            items: {
+                                bsonType: "string",
+                                description: "Ingrese la version autorizada",
+                            }
+                        }
+                    }
                 }
             }
         }

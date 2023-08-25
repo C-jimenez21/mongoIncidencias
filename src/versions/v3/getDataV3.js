@@ -83,15 +83,16 @@ const getAllRoomsV3 = async(req,res) =>{
     let result = await col.aggregate([
         {
             $sort: {
-                nombre_completo: 1
+                salon_area: 1
             }
         },
         {
             $project: {
+                "_id": 0,
                 IDENTIDICACION: "$_id",
-                NOMBRE_TRAINER: "$nombre_completo",
-                EMAIL_TRAINER:{PERSONAL:"$email_personal", CORPORATIVO:"$email_corporativo"},
-                TELEFONO_TRAINER: { MOVIL: "$telefono_movil", RESIDENCIA:"$telefono_residencia", EMPRESA: "$telefono_empresa", MOVIL_EMPRESA:"$telefono_movil_empresarial"}
+                SALON_AREA: "$nombre_completo",
+                SALON_NOMBRE:"$salon_nombre",
+                COMPUTADORES: "$ordenadores"
             }
         }
     ]).toArray();
@@ -107,5 +108,6 @@ const getAllRoomsV3 = async(req,res) =>{
 export {
     getAllIncidenciasV3,
     getIncidenciasByDate,
-    getAllTrainersV3
+    getAllTrainersV3,
+    getAllRoomsV3
 }
