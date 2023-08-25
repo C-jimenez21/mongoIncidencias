@@ -49,39 +49,29 @@ const postNewTrainerV3 = async(req, res) => {
   
     }
 
-    const postNewComputer = async(req, res) => {
-        const { TRAINER_NAME: name, PERSONAL_EMAIL: email, CORPORATIVO_EMAIL: eCorp, MOVIL_PHONE: tMovil, RESIDENCIA_PHONE: tRes, EMPRESA_PHONE: tEmp, MOVIL_EMPRESA_PHONE: tEmpMov } = req.body;
+    const postNewComputerV3 = async(req, res) => {
+        const { AREA: area, ROOM: sala, PC_CODE: codigo, PC_KEYBOARD: teclado, PC_MOUSE: raton, PC_HEADPHONES: audifonos } = req.body;
             let schema = {
-                "_id": await getNewId("trainer"),
-                "nombre_completo": name,
-                "email_personal": email,
-                "email_corporativo": eCorp,
-                "telefono_movil": tMovil,
-                "telefono_residencia": tRes,
-                "telefono_empresa": tEmp,
-                "telefono_movil_empresarial": tEmpMov
-            }
-
-            const pipeline = [
-                db.salon.updateOne(
-                    { _id: 1 }, // Filtro para encontrar el documento que deseas actualizar
+                "salon_area":area,
+                "salon_nombre":sala,
+                "ordenadores":[
                     {
-                      $push: {
-                        ordenadores: {
-                          ordenador_codigo: "PC002",
-                          ordenador_codigo_teclado: "T002",
-                          ordenador_codigo_mouse: "M002",
-                          ordenador_codigo_diadema: "D002"
-                        }
-                      }
+                        "ordenador_codigo": codigo,
+                        "ordenador_codigo_teclado": teclado,
+                        "ordenador_codigo_mouse": raton,
+                        "ordenador_codigo_diadema": audifonos
                     }
-                  )
-            ]
-
-
-            [{"ordenador_codigo":"PC3","ordenador_codigo_teclado":"TEC3","ordenador_codigo_mouse":"MOU3","ordenador_codigo_diadema":"DIA3"}]
-            let col = await genCollection("trainer");
-            let result = await col.insertOne(schema);
+                ]
+            }
+            let col = await genCollection("salon");
+            let result = await col.updateOne(
+                { "salon_nombre": sala }, 
+                {
+                  $push: {
+                    ordenadores: schema
+                  }
+                }
+              );
             res.send(result);    
       
         }
@@ -91,6 +81,7 @@ const postNewTrainerV3 = async(req, res) => {
 
 export {
     postNewIncidenciaV3,
-    postNewTrainerV3
+    postNewTrainerV3,
+    postNewComputerV3
     
 }

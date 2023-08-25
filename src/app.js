@@ -4,6 +4,7 @@ import {servidor} from './config/server.js'
 
 import {appIncidencias} from './routers/incidencias.js' 
 import {appTrainers} from './routers/trainer.js' 
+import {appSalon} from './routers/salon.js' 
 
 dotenv.config()
 
@@ -13,6 +14,7 @@ appExpress.use(express.json());
 
 appExpress.use('/incidencias', appIncidencias);
 appExpress.use('/trainers', appTrainers);
+appExpress.use('/salon', appSalon);
 
 // escuchar servidor
 appExpress.listen(servidor.port, () => {
