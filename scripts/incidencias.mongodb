@@ -168,7 +168,7 @@ db.reporte.insertMany([
             categoria: "leve"
         },
         fecha: ISODate("2023-08-20"),
-        lugar_incidencia: "Oficina A",
+        lugar_incidencia: "apolo",
         descripcion: "Reporte de incidente menor en la oficina."
     },
     {
@@ -178,7 +178,7 @@ db.reporte.insertMany([
             categoria: "moderada"
         },
         fecha: ISODate("2023-08-21"),
-        lugar_incidencia: "Oficina B",
+        lugar_incidencia: "artemis",
         descripcion: "Reporte de problema con el equipo de red."
     },
     {
@@ -188,7 +188,7 @@ db.reporte.insertMany([
             categoria: "leve"
         },
         fecha: ISODate("2023-08-22"),
-        lugar_incidencia: "Oficina A",
+        lugar_incidencia: "corvus",
         descripcion: "Reporte de problema con la impresora."
     },
     {
@@ -198,7 +198,7 @@ db.reporte.insertMany([
             categoria: "critica"
         },
         fecha: ISODate("2023-08-23"),
-        lugar_incidencia: "Oficina C",
+        lugar_incidencia: "endor",
         descripcion: "Reporte de fallo del servidor principal."
     },
     {
@@ -208,7 +208,7 @@ db.reporte.insertMany([
             categoria: "moderada"
         },
         fecha: ISODate("2023-08-24"),
-        lugar_incidencia: "Oficina B",
+        lugar_incidencia: "artemis",
         descripcion: "Reporte de lentitud en las computadoras."
     }
 ]);

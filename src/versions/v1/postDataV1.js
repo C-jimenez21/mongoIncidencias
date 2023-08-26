@@ -8,13 +8,16 @@ import { genCollection, searchCallback} from "../../helpers/db.js";
 
 
 const postNewIncidencia = async(req, res) => {
+   try {
+    console.log({"req.body": req.body});
     const {id, categoria, nivel, fecha, lugar_incidencia, descripcion} = req.body
+    
     let validacion = await searchCallback("reporte", "_id", id);
     if (!validacion) {
     let schema = {
         "_id": Number(id),
         "usu_incidencia":{
-            "nivel": nivel,
+            "nivel": Number(nivel),
             "categoria": categoria,
         },
         "fecha": new Date(fecha),
@@ -27,8 +30,11 @@ const postNewIncidencia = async(req, res) => {
 }else{
     res.status(400).send("Este id ya se encuentra registrado en la base de datos");
 }
+   
+   } catch (error) {
+    console.log(error.errInfo.details.schemaRulesNotSatisfied.propertiesNotSatisfied);
+   }
 }
-
 
 
 export {

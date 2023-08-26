@@ -9,10 +9,13 @@ import { genCollection, searchCallback} from "../../helpers/db.js";
 
 const deleteAnyoneById = async(req, res) => {
     const {id} = req.params
-    const { baseurl} = req
-    let validacion = await searchCallback("reporte", "_id", id);
+    const { baseUrl} = req
+    const url = baseUrl.split("/")[1]
+    console.log({"url": url});
+    let validacion = await searchCallback(url, "_id", Number(id));
+    console.log({"variables": url, id});
     if (validacion) {
-    let col = await genCollection(baseurl);
+    let col = await genCollection(url);
     let result = await col.deleteOne({"_id": Number(id)});
     res.send(result);
 }else{

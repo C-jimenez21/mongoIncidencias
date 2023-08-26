@@ -4,7 +4,6 @@ import { postNewIncidencia } from '../versions/v1/postDataV1.js'
 import { getAllIncidenciasV3, getIncidenciasByDate } from '../versions/v3/getDataV3.js'
 import {  postNewIncidenciaV3 } from '../versions/v3/postDataV3.js';
 import { deleteAnyoneById } from '../versions/v1/delete.js';
-
 //import {limitUsuario} from '../config/limit.js'
 //import passportHelper from '../config/passportHelpert.js'
 import Router from 'express';
@@ -21,11 +20,12 @@ const version = routesVersioning();
 //appIncidencias.use(limitUsuario(), passportHelper.authenticate('bearer', { session: false }));
 //Headers 'Accept-Version: ~1.0.0' 
 
+
+
 /**
  * @VERSION ~1.0.0 -> Lista todas las incidencias
  * @VERSION ~3.5.0-> Lista todas las incidencias de mayor a menor segun el nivel de gravedad 
  */
-
 
 
 appIncidencias.get('/',  version({
@@ -51,12 +51,7 @@ appIncidencias.post('/', version({
     "~3.5.0": postNewIncidenciaV3
 }));
 
-/**
- * @VERSION ~1.0.0-> Elimina el trainer con el id seleccionado
- */
-appIncidencias.delete('/:id', version({ 
-    "~1.0.0": deleteAnyoneById
-}));
+
 
 export {
     appIncidencias

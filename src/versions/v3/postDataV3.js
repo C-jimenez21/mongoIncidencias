@@ -43,6 +43,7 @@ const postNewTrainerV3 = async(req, res) => {
             "telefono_empresa": tEmp,
             "telefono_movil_empresarial": tEmpMov
         }
+
         let col = await genCollection("trainer");
         let result = await col.insertOne(schema);
         res.send(result);    
@@ -50,29 +51,33 @@ const postNewTrainerV3 = async(req, res) => {
     }
 
     const postNewComputerV3 = async(req, res) => {
+       try {
         const { AREA: area, ROOM: sala, PC_CODE: codigo, PC_KEYBOARD: teclado, PC_MOUSE: raton, PC_HEADPHONES: audifonos } = req.body;
-            let schema = {
-                "salon_area":area,
-                "salon_nombre":sala,
-                "ordenadores":[
-                    {
-                        "ordenador_codigo": codigo,
-                        "ordenador_codigo_teclado": teclado,
-                        "ordenador_codigo_mouse": raton,
-                        "ordenador_codigo_diadema": audifonos
-                    }
-                ]
+        let schema = {
+      
+    
+                    "ordenador_codigo": codigo,
+                    "ordenador_codigo_teclado": teclado,
+                    "ordenador_codigo_mouse": raton,
+                    "ordenador_codigo_diadema": audifonos
+            
+            
+        }
+        console.log(schema);
+        let col = await genCollection("salon");
+        let result = await col.updateOne(
+            { "salon_nombre": sala }, 
+            {
+              $push: {
+                ordenadores: schema
+              }
             }
-            let col = await genCollection("salon");
-            let result = await col.updateOne(
-                { "salon_nombre": sala }, 
-                {
-                  $push: {
-                    ordenadores: schema
-                  }
-                }
-              );
-            res.send(result);    
+          );
+        res.send(result);          
+       } catch (error) {
+        console.log(error.errInfo.details.schemaRulesNotSatisfied.propertiesNotSatisfied);
+
+       }  
       
         }
 

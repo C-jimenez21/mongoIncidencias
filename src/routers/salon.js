@@ -18,11 +18,11 @@ const version = routesVersioning();
 
 /**
  * @VERSION ~1.0.0 -> Lista todas los salones registrados
- * @VERSION ~3.5.0-> Lista todas los trainers registrados pero fomateando su salida con valores diferentes a los del backend
+ * @VERSION ~3.5.0-> Lista todas los salones registrados pero fomateando su salida con valores diferentes a los del backend
  */
 
 appSalon.get('/',  version({
-    "~~1.0.0": getAllRooms,
+    "~1.0.0": getAllRooms,
     "~3.5.0": getAllRoomsV3
 }));
 
@@ -45,7 +45,8 @@ appSalon.post('/', version({
  * @VERSION ~1.0.0-> Elimina el area con el id seleccionado
  */
 appSalon.delete('/:id', version({ 
-    "~1.0.0": deleteAnyoneById
+    "~1.0.0": deleteAnyoneById,
+    "~3.5.0" : deleteAnyoneById
 }));
 
 
